@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Arrays;
 
@@ -12,6 +13,8 @@ import java.util.Arrays;
  * @author Kinyi_Chan
  * @since 2018-11-23.
  */
+
+@EnableSwagger2
 @SpringBootApplication
 public class FirstApplication {
 
