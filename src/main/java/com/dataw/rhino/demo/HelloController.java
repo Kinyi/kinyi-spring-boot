@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Kinyi_Chan
+ * @since 2018-11-23.
+ */
 @Slf4j
 @RestController
 public class HelloController {
-    
+
     @RequestMapping("/")
     public String index() {
         return "Greetings from Spring Boot!";
@@ -20,5 +24,5 @@ public class HelloController {
         log.info("hi, " + userName);
         return "hi, " + userName;
     }
-    
+
 }
