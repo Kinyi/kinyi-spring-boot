@@ -1,6 +1,7 @@
 package com.dataw.rhino.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.CellType;
@@ -23,10 +24,10 @@ public class ExcelUtil {
         throw new IllegalStateException("Utility class");
     }
 
-    public static <E> HSSFWorkbook writeXlsWithEntity(List<LinkedHashMap<String, Integer>> head, String[] title, List<E> entities, int checkNum, boolean highlight) throws Exception {
-        List<Map<String, String>> list = new LinkedList<>();
+    public static <E> HSSFWorkbook writeXlsWithEntity(HSSFWorkbook workbook, String sheetName, List<LinkedHashMap<String, Integer>> head, String[] title, List<E> entities, int checkNum, boolean highlight) throws Exception {
+        List<Map<String, Object>> list = new LinkedList<>();
         for (Object entity : entities) {
-            Map<String, String> map = new HashMap<>(16);
+            Map<String, Object> map = new HashMap<>(16);
             for (Field field : entity.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 if (field.get(entity) != null) {
@@ -35,12 +36,14 @@ public class ExcelUtil {
             }
             list.add(map);
         }
-        return writeXls(head, title, list, checkNum, highlight);
+        return writeXls(workbook, sheetName, head, title, list, checkNum, highlight);
     }
 
     /**
      * 若文件已存在,则追加写数据, xls格式为旧版本的excel
      *
+     * @param workbook  新建为NULL, 追加为已有HSSFWorkbook实例
+     * @param sheetName sheetName
      * @param head      表头
      * @param title     列名
      * @param content   内容数据 List<Map<String, String>>
@@ -48,9 +51,11 @@ public class ExcelUtil {
      * @param highlight 是否需要高亮显示
      * @throws Exception
      */
-    public static HSSFWorkbook writeXls(List<LinkedHashMap<String, Integer>> head, String[] title, List<Map<String, String>> content, int checkNum, boolean highlight) throws Exception {
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("sheet1");
+    public static HSSFWorkbook writeXls(HSSFWorkbook workbook, String sheetName, List<LinkedHashMap<String, Integer>> head, String[] title, List<Map<String, Object>> content, int checkNum, boolean highlight) throws Exception {
+        if (workbook == null) {
+            workbook = new HSSFWorkbook();
+        }
+        HSSFSheet sheet = workbook.createSheet(sheetName);
         int headSize = 0;
         //设置表头
         if (head != null && !head.isEmpty()) {
@@ -96,7 +101,7 @@ public class ExcelUtil {
         int index = sheet.getLastRowNum();
         List<List<String>> checkList = new LinkedList<>();
         //写入数据
-        for (Map<String, String> line : content) {
+        for (Map<String, Object> line : content) {
             HSSFRow row = sheet.createRow(index + 1);
             writeRow(row, title, line, checkList, checkNum);
             index++;
@@ -130,20 +135,22 @@ public class ExcelUtil {
         return workbook;
     }
 
-    private static void writeRow(Row row, String[] title, Map<String, String> line, List<List<String>> checkList, int checkNum) {
+    private static void writeRow(Row row, String[] title, Map<String, Object> line, List<List<String>> checkList, int checkNum) {
         try {
             for (int n = 0; n <= title.length - 1; n++) {
                 row.createCell(n);
-                if (line.get(title[n]) != null && line.get(title[n]).length() > 20000) {
+                if (line.get(title[n]) != null && line.get(title[n]).toString().length() > 20000) {
                     log.info("单元格内容过长! -> " + title[n]);
                     continue;
                 }
-                row.getCell(n).setCellValue(line.get(title[n]));
+                if (line.get(title[n]) != null && StringUtils.isNotBlank(line.get(title[n]).toString())) {
+                    row.getCell(n).setCellValue(line.get(title[n]).toString());
+                }
                 if (n < checkNum) {
                     if (checkList.size() < n + 1) {
                         checkList.add(new LinkedList<>());
                     }
-                    checkList.get(n).add(line.get(title[n]));
+                    checkList.get(n).add(line.get(title[n]) == null ? "" : line.get(title[n]).toString());
                 }
             }
         } catch (Exception e) {
