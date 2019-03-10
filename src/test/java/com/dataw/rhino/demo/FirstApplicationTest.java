@@ -53,7 +53,7 @@ public class FirstApplicationTest {
 
     @Test
     public void testLambda() {
-
+        System.out.println();
     }
 
     private void filter(List<String> lang, Predicate<String> condition) {
