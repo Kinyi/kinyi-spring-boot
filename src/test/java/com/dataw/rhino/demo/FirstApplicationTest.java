@@ -11,6 +11,9 @@ import org.apache.shiro.util.Factory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 import static org.junit.Assert.*;
 
 /**
@@ -46,5 +49,14 @@ public class FirstApplicationTest {
         Assert.assertTrue(subject.isAuthenticated());//断言用户已经登录
         //6、退出
         subject.logout();
+    }
+
+    @Test
+    public void testLambda() {
+
+    }
+
+    private void filter(List<String> lang, Predicate<String> condition) {
+        lang.stream().filter(condition).forEach(System.out::println);
     }
 }
