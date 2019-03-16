@@ -6,4 +6,5 @@ package com.dataw.rhino.demo;
  */
 public class People {
     String name = "kinyi";
+    Integer age = 24;
 }
