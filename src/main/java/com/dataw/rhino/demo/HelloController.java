@@ -30,4 +30,9 @@ public class HelloController {
         return "hi, " + userName;
     }
 
+    @GetMapping("/index2")
+    @ApiOperation(value = "index", httpMethod = "GET")
+    public String index2() {
+        return "Greetings from Spring Boot to kinyi!";
+    }
 }
