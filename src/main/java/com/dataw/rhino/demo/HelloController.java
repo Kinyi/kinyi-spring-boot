@@ -20,7 +20,9 @@ public class HelloController {
     @GetMapping("/")
     @ApiOperation(value = "index", httpMethod = "GET")
     public String index() {
-        return "Greetings from Spring Boot!";
+        String sentence = "Greetings from Spring Boot!";
+        log.info(sentence);
+        return sentence;
     }
 
     @PostMapping(value = "/getName")

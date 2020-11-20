@@ -5,6 +5,13 @@ package com.dataw.rhino.demo;
  * @since 2018-11-29
  */
 public class People {
-    String name = "kinyi";
-    Integer age = 24;
+
+    private String name;
+
+    private People() {
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
