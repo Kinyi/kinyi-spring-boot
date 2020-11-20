@@ -28,7 +28,7 @@ public class SpecialBeanForEngine implements BeanFactoryPostProcessor, BeanNameA
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         BeanDefinitionRegistry bdr = (BeanDefinitionRegistry) beanFactory;
 
-        Engine a = (Engine) beanFactory;
+//        Engine a = (Engine) beanFactory;
 //        GenericBeanDefinition gbd = new GenericBeanDefinition();
 //        gbd.setBeanClass(EngineFactory.class);
 //        gbd.setScope(BeanDefinition.SCOPE_SINGLETON);
