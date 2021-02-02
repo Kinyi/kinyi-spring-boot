@@ -11,11 +11,11 @@ import java.util.concurrent.*;
  */
 public class ThreadPoolHook {
 
-    static class ListenableThreadpool extends AbstractListeningExecutorService {
+    static class ListenableThreadPool extends AbstractListeningExecutorService {
 
         private final ExecutorService delegate;
 
-        public ListenableThreadpool(ExecutorService delegate) {
+        public ListenableThreadPool(ExecutorService delegate) {
             this.delegate = delegate;
         }
 
@@ -81,7 +81,7 @@ public class ThreadPoolHook {
 
         //使用预留的done()方法实现钩子回调
         ListeningExecutorService listeningExecutorService = MoreExecutors
-                .listeningDecorator(new ListenableThreadpool(executorService));
+                .listeningDecorator(new ListenableThreadPool(executorService));
         ListenableFuture<String> listenableFuture = listeningExecutorService.submit(callable);
         listenableFuture.addListener(() -> {
             try {
