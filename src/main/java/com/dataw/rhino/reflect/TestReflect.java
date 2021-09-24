@@ -76,5 +76,11 @@ public class TestReflect {
 //        Integer f = 188;
 //
 //        System.out.println("!!!!!!!!!!" + (e == f));
+
+//        int i = 6;
+//        int j = i % 4;
+//        int k = i & 3;
+//        System.out.println(j);
+//        System.out.println(k);
     }
 }

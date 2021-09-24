@@ -124,6 +124,39 @@
             <artifactId>guava</artifactId>
             <version>23.0</version>
         </dependency>
+
+      <dependency>
+        <groupId>com.sensorsdata.analytics.javasdk</groupId>
+        <artifactId>SensorsAnalyticsSDK</artifactId>
+        <version>3.1.20</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.7</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-core</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-access</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-all</artifactId>
+        <version>4.1.45.Final</version>
+      </dependency>
     </dependencies>
 
     <properties>

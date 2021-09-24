@@ -1,9 +1,7 @@
 package com.dataw.rhino;
 
-import com.dataw.rhino.demo.postprocessor.SpecialBeanForEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 /**
  * @author Kinyi_Chan
@@ -12,17 +10,31 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(App.class, args);
+//        SensorsDataUtil sensorsDataUtil = new SensorsDataUtil();
+//        SensorsDataUtil sensorsDataUtil1 = new SensorsDataUtil();
 
+//        System.out.println(sensorsDataUtil.getInstance());
+//        System.out.println(sensorsDataUtil1.getInstance());
+        String a = "name_";
+        System.out.println(a.split("_")[1]);
 //        try {
 //            System.in.read();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 
+//        Runtime.getRuntime().addShutdownHook(new Thread(() -> System.out.println("shutdown!!!")));
+//
+//        while (true) {
+//            System.out.println(new Random().nextInt(1));
+//            Thread.sleep(1000);
+//        }
 
-
+//        DemoImpl demo = new DemoImpl();
+//        System.out.println(demo.say());
+//        demo.eat();
     }
 
 //    @Bean(initMethod = "start")
@@ -32,8 +44,8 @@ public class App {
 //        return car;
 //    }
 
-    @Bean
-    SpecialBeanForEngine specialBeanForEngine() {
-        return new SpecialBeanForEngine();
-    }
+//    @Bean
+//    SpecialBeanForEngine specialBeanForEngine() {
+//        return new SpecialBeanForEngine();
+//    }
 }
