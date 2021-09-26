@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Kinyi_Chan
- * @since 2021-09-24
+ * @since 2021/9/24 22:56
  */
 public class MultiThreadEchoServerReactor {
 
-    private ServerSocketChannel serverSocket;
+    private ServerSocketChannel serverSocketChannel;
     private AtomicInteger next = new AtomicInteger(0);
     private Selector bossSelector;
     private Reactor bossReactor;
@@ -30,15 +30,15 @@ public class MultiThreadEchoServerReactor {
         //初始化多个selector选择器
         workSelectors[0] = Selector.open();
         workSelectors[1] = Selector.open();
-        serverSocket = ServerSocketChannel.open();
+        serverSocketChannel = ServerSocketChannel.open();
 
         InetSocketAddress address = new InetSocketAddress("localhost", 8989);
-        serverSocket.socket().bind(address);
+        serverSocketChannel.socket().bind(address);
         //非阻塞
-        serverSocket.configureBlocking(false);
+        serverSocketChannel.configureBlocking(false);
 
         //第一个selector,负责监控新连接事件
-        SelectionKey sk = serverSocket.register(bossSelector, SelectionKey.OP_ACCEPT);
+        SelectionKey sk = serverSocketChannel.register(bossSelector, SelectionKey.OP_ACCEPT);
         //附加新连接处理handler处理器到SelectionKey（选择键）
         sk.attach(new AcceptorHandler());
 
@@ -83,14 +83,13 @@ public class MultiThreadEchoServerReactor {
                         //Reactor负责dispatch收到的事件
                         SelectionKey sk = it.next();
                         dispatch(sk);
+                        it.remove();
                     }
-                    selectedKeys.clear();
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-
 
         void dispatch(SelectionKey sk) {
             Runnable handler = (Runnable) sk.attachment();
@@ -106,7 +105,7 @@ public class MultiThreadEchoServerReactor {
         @Override
         public void run() {
             try {
-                SocketChannel channel = serverSocket.accept();
+                SocketChannel channel = serverSocketChannel.accept();
                 System.out.println("接收到一个新的连接");
 
                 if (channel != null) {
@@ -128,5 +127,4 @@ public class MultiThreadEchoServerReactor {
         MultiThreadEchoServerReactor server = new MultiThreadEchoServerReactor();
         server.startService();
     }
-
 }

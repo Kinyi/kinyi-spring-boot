@@ -10,14 +10,14 @@ import java.util.concurrent.Executors;
 
 /**
  * @author Kinyi_Chan
- * @since 2021-09-24
+ * @since 2021/9/24 22:57
  */
 public class MultiThreadEchoHandler implements Runnable {
     private final SocketChannel channel;
     private final SelectionKey sk;
     private final ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-    private static final int RECIEVING = 0, SENDING = 1;
-    private int state = RECIEVING;
+    private static final int RECEIVING = 0, SENDING = 1;
+    private int state = RECEIVING;
     //引入线程池
     private static ExecutorService pool = Executors.newFixedThreadPool(4);
 
@@ -35,7 +35,7 @@ public class MultiThreadEchoHandler implements Runnable {
         //向sk选择键注册Read就绪事件
         sk.interestOps(SelectionKey.OP_READ);
 
-        //唤醒选择，是的OP_READ生效
+        //唤醒选择，使得OP_READ生效
         selector.wakeup();
         System.out.println("新的连接 注册完成");
     }
@@ -52,16 +52,15 @@ public class MultiThreadEchoHandler implements Runnable {
             if (state == SENDING) {
                 //写入通道
                 channel.write(byteBuffer);
-
                 //写完后,准备开始从通道读,byteBuffer切换成写模式
                 byteBuffer.clear();
                 //写完后,注册read就绪事件
                 sk.interestOps(SelectionKey.OP_READ);
                 //写完后,进入接收的状态
-                state = RECIEVING;
-            } else if (state == RECIEVING) {
+                state = RECEIVING;
+            } else if (state == RECEIVING) {
                 //从通道读
-                int length = 0;
+                int length;
                 while ((length = channel.read(byteBuffer)) > 0) {
                     System.out.println(new String(byteBuffer.array(), 0, length));
                 }
