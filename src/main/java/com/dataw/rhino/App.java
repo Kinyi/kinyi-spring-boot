@@ -17,8 +17,8 @@ public class App {
 
 //        System.out.println(sensorsDataUtil.getInstance());
 //        System.out.println(sensorsDataUtil1.getInstance());
-        String a = "name_";
-        System.out.println(a.split("_")[1]);
+//        String a = "name_";
+//        System.out.println(a.split("_")[1]);
 //        try {
 //            System.in.read();
 //        } catch (IOException e) {

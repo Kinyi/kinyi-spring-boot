@@ -4,11 +4,14 @@ import com.dataw.rhino.bean.PeopleConverter;
 import com.dataw.rhino.demo.Hobby;
 import com.dataw.rhino.demo.People;
 import com.dataw.rhino.demo.PeopleDTO;
+import com.dataw.rhino.serivce.MyService;
 import com.sensorsdata.analytics.javasdk.SensorsAnalytics;
 import com.sensorsdata.analytics.javasdk.exceptions.InvalidArgumentException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +34,14 @@ public class BeanCopyController {
 
     @Autowired
     private PeopleConverter peopleConverter;
+
+    @Autowired
+    private MyService myService;
+
+    @GetMapping("random")
+    public String random() {
+        return myService.random();
+    }
 
     @GetMapping("/testBeanCopy")
     public void testBeanCopy() {
@@ -108,7 +119,25 @@ public class BeanCopyController {
         return "hello";
     }
 
+    @ApiOperation(value = "测试入参实体类")
+    @PutMapping("/test/body")
+    public String setNames(@RequestBody User user) {
+        return "hello";
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    static class User {
+        private String xml;
+
+        public String getXml() {
+            return xml;
+        }
+
+        public void setXml(String xml) {
+            this.xml = xml;
+        }
     }
 }

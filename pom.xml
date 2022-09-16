@@ -147,16 +147,31 @@
         <version>1.2.3</version>
       </dependency>
       <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>1.2.3</version>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>1.2.3</version>
       </dependency>
 
-      <dependency>
-        <groupId>io.netty</groupId>
-        <artifactId>netty-all</artifactId>
-        <version>4.1.45.Final</version>
-      </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.45.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.25.0-GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>1.8.0</version>
+            <scope>system</scope>
+            <systemPath>/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/lib/tools.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -164,24 +179,142 @@
         <mapstruct.version>1.2.0.Final</mapstruct.version>
     </properties>
 
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.springframework.boot</groupId>-->
+    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+    <!--            </plugin>-->
+    <!--            <plugin>-->
+    <!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <goals>-->
+    <!--                            <goal>integration-test</goal>-->
+    <!--                            <goal>verify</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+
+
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-jar-plugin</artifactId>-->
+    <!--                <version>2.3.2</version>-->
+    <!--                <configuration>-->
+    <!--                    <archive>-->
+    <!--                        <manifest>-->
+    <!--                            <addClasspath>true</addClasspath>-->
+    <!--                        </manifest>-->
+    <!--                        <manifestEntries>-->
+    <!--                            <Agent-Class>com.dataw.rhino.bytecode.agent.MyAgent</Agent-Class>-->
+    <!--&lt;!&ndash;                            <Premain-Class>com.mmc.agent.TestAgent</Premain-Class>&ndash;&gt;-->
+    <!--                            <Can-Redefine-Classes>true</Can-Redefine-Classes>-->
+    <!--                            <Can-Retransform-Classes>true</Can-Retransform-Classes>-->
+    <!--                            <Boot-Class-Path>javassist-3.25.0-GA.jar</Boot-Class-Path>-->
+    <!--                        </manifestEntries>-->
+    <!--                    </archive>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
+
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <!-- 指定maven编译的jdk版本。若不指定,maven3默认用jdk 1.5 maven2默认用jdk1.3 -->
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
+
+            <!--                                <plugin>-->
+            <!--                                    <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                                    <artifactId>maven-jar-plugin</artifactId>-->
+            <!--                                    <version>2.3.2</version>-->
+            <!--                                    <configuration>-->
+            <!--                                        <archive>-->
+            <!--                                            <manifest>-->
+            <!--                                                <addClasspath>true</addClasspath>-->
+            <!--                                            </manifest>-->
+            <!--                                            <manifestEntries>-->
+            <!--                                                <Main-Class>com.dataw.rhino.bytecode.test.Demo</Main-Class>-->
+            <!--                                                <Agent-Class>com.dataw.rhino.bytecode.agent.MyAgent</Agent-Class>-->
+            <!--                            <Premain-Class>com.mmc.agent.TestAgent</Premain-Class>-->
+            <!--                                                <Can-Redefine-Classes>true</Can-Redefine-Classes>-->
+            <!--                                                <Can-Retransform-Classes>true</Can-Retransform-Classes>-->
+            <!--                                                <Boot-Class-Path>javassist-3.25.0-GA.jar</Boot-Class-Path>-->
+            <!--                                            </manifestEntries>-->
+            <!--                                        </archive>-->
+            <!--                                    </configuration>-->
+            <!--                                </plugin>-->
+
             <plugin>
-                <artifactId>maven-failsafe-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.dataw.rhino.bytecode.Base</mainClass>
+                            <!--                                    <mainClass>com.dataw.rhino.bytecode.test.Demo</mainClass>-->
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
+                </configuration>
+
                 <executions>
                     <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
+                            <goal>single</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>3.5.1</version>-->
+    <!--                &lt;!&ndash; 指定maven编译的jdk版本。若不指定,maven3默认用jdk 1.5 maven2默认用jdk1.3 &ndash;&gt;-->
+    <!--                <configuration>-->
+    <!--                    <source>8</source>-->
+    <!--                    <target>8</target>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-jar-plugin</artifactId>-->
+    <!--                <version>3.2.0</version>-->
+    <!--                <configuration>-->
+    <!--                    <archive>-->
+    <!--                        &lt;!&ndash;自动添加META-INF/MANIFEST.MF &ndash;&gt;-->
+    <!--                        <manifest>-->
+    <!--                            <addClasspath>true</addClasspath>-->
+    <!--                        </manifest>-->
+    <!--                        <manifestEntries>-->
+    <!--                            <Menifest-Version>1.0</Menifest-Version>-->
+    <!--                            <Premain-Class>com.dataw.rhino.bytecode.test.DemoAgent</Premain-Class>-->
+    <!--                            <Can-Redefine-Classes>true</Can-Redefine-Classes>-->
+    <!--                            <Can-Retransform-Classes>true</Can-Retransform-Classes>-->
+    <!--                        </manifestEntries>-->
+    <!--                    </archive>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+    <!--        </plugins>-->
+    <!--    </build>-->
 
 </project>

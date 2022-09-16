@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Agent-Class: com.dataw.rhino.bytecode.agent.MyAgent
+Created-By: Kinyi_Chan
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Boot-Class-Path: javassist-3.25.0-GA.jar
+Class-Path: javassist-3.25.0-GA.jar
