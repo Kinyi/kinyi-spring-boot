@@ -24,6 +24,10 @@ public class SpecialBeanForEngine implements BeanFactoryPostProcessor, BeanNameA
         this.name = name;
     }
 
+    public String get() {
+        return "fuck man!";
+    }
+
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         BeanDefinitionRegistry bdr = (BeanDefinitionRegistry) beanFactory;

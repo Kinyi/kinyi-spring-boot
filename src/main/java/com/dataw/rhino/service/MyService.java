@@ -1,4 +1,4 @@
-package com.dataw.rhino.serivce;
+package com.dataw.rhino.service;
 
 /**
  * @author Kinyi_Chan

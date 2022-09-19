@@ -4,10 +4,10 @@ import com.dataw.rhino.bean.PeopleConverter;
 import com.dataw.rhino.demo.Hobby;
 import com.dataw.rhino.demo.People;
 import com.dataw.rhino.demo.PeopleDTO;
-import com.dataw.rhino.serivce.MyService;
+import com.dataw.rhino.demo.postprocessor.SpecialBeanForEngine;
+import com.dataw.rhino.service.MyService;
 import com.sensorsdata.analytics.javasdk.SensorsAnalytics;
 import com.sensorsdata.analytics.javasdk.exceptions.InvalidArgumentException;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,9 +38,15 @@ public class BeanCopyController {
     @Autowired
     private MyService myService;
 
+    @Autowired
+    private SpecialBeanForEngine engine;
+
+    @Autowired
+    private TestController controller;
+
     @GetMapping("random")
     public String random() {
-        return myService.random();
+        return myService.random() + " - " + engine.get();
     }
 
     @GetMapping("/testBeanCopy")
@@ -77,13 +83,13 @@ public class BeanCopyController {
     }
 
 
-    @ApiOperation(value = "修改状态")
+    //    @ApiOperation(value = "修改状态")
     @GetMapping("/updatestatus")
     public String updateStatus(@RequestParam(value = "id") Long id, @RequestParam(value = "status") String status, @RequestParam(value = "force") Boolean force) {
         return "hello";
     }
 
-    @ApiOperation(value = "参数测试")
+    //    @ApiOperation(value = "参数测试")
     @GetMapping("/test")
     public String test(@RequestParam String input) {
         try {
@@ -103,7 +109,7 @@ public class BeanCopyController {
         return input;
     }
 
-    @ApiOperation(value = "修改状态")
+    //    @ApiOperation(value = "修改状态")
     @GetMapping("/test/thread/safe")
     public String safe() {
         String copy = name;
@@ -111,7 +117,7 @@ public class BeanCopyController {
         return "hello";
     }
 
-    @ApiOperation(value = "setname")
+    //    @ApiOperation(value = "setname")
     @GetMapping("/test/thread/setname")
     public String setNames(String name) {
         setName(name);
@@ -119,7 +125,7 @@ public class BeanCopyController {
         return "hello";
     }
 
-    @ApiOperation(value = "测试入参实体类")
+    //    @ApiOperation(value = "测试入参实体类")
     @PutMapping("/test/body")
     public String setNames(@RequestBody User user) {
         return "hello";

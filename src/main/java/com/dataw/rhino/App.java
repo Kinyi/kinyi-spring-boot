@@ -1,7 +1,9 @@
 package com.dataw.rhino;
 
+import com.dataw.rhino.demo.postprocessor.SpecialBeanForEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author Kinyi_Chan
@@ -44,8 +46,8 @@ public class App {
 //        return car;
 //    }
 
-//    @Bean
-//    SpecialBeanForEngine specialBeanForEngine() {
-//        return new SpecialBeanForEngine();
-//    }
+    @Bean
+    SpecialBeanForEngine specialBeanForEngine() {
+        return new SpecialBeanForEngine();
+    }
 }

@@ -1,4 +1,4 @@
-package com.dataw.rhino.serivce;
+package com.dataw.rhino.service;
 
 import org.springframework.stereotype.Service;
 

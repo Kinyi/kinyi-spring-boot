@@ -21,7 +21,7 @@ public class LogAspect {
         log.info("invoke controller");
     }
 
-    @Pointcut("within(com.dataw.rhino.serivce.MyServiceImpl)")
+    @Pointcut("within(com.dataw.rhino.service.MyServiceImpl)")
     public void specificMethods() {
     }
 
